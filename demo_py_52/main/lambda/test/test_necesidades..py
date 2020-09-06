@@ -19,6 +19,10 @@ nombre_fichero = 'MATNECOB.txt'
 f = open(nombre_fichero, 'r')
 file_content = StringIO(f.read())
 f.close()
+#revisar
+#revisar#revisar#revisar#revisar
+#revisar
+#revisar
 
 # recogemos la variable file_name
 file = path + file_name
