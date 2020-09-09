@@ -115,7 +115,7 @@ df = df.reindex(columns=ordered_output_header)
 df = df.astype({'cantidad': int})
 
 # Transform datetime columns into formatted strings with appropriate tz:
-#specific_formats = get_outputfile_formats(file_schema)
+specific_formats = get_outputfile_formats(file_schema)
 
 # Transform null columns:
 
