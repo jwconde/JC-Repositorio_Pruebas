@@ -118,19 +118,8 @@ df = df.astype({'cantidad': int})
 #specific_formats = get_outputfile_formats(file_schema)
 
 # Transform null columns:
-#def get_outputfile_types(file_schema:dict)->dict:
-#    types = {}
-#    for column in file_schema.items():
-#        key = column[1]['output_fieldname']
-#        types[key]={}
-#        types[key]['type']= column[1]['output_type']
-#    return types
 
 #Transform null columns:
-#specific_types = get_outputfile_types(schema)
-#for column in specific_types.items():
-#    if column[1]['type'] == 'str' or column[1]['type'] == 'date':
-#        df.fillna('', inplace=True)
 
 
 # Get dataframe data in json format
