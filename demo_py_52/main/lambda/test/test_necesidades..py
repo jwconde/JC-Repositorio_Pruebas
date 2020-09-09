@@ -8,21 +8,22 @@ from datetime import datetime, timezone
 
 # formato para leer el archivo
 csv_separator = ';'
+csv_thousands = ','
+csv_decimal = '.'
 file_encoding = 'utf-8'
-path = 'C:/PROYECTO_SEAT_AWS/JIRA_SCT_48/main/properties/'
+path = 'C:/PROYECTO_SEAT_AWS/JIRA_SCT_52/demo_py_52/main/lambda/properties_json/'
 file_name = 'necesidades-schema.json'
 
-# archivo de salida
-nombre_fichero = 'MATNECOB.txt'
+# archivo metadato
+nombre_fichero= 'C:/PROYECTO_SEAT_AWS/JIRA_SCT_52/demo_py_52/main/metadatos/MATNECOB.txt'
+#nombre_fichero = 'MATNECOB.txt'
 
 # vamos a leer el fichero
 f = open(nombre_fichero, 'r')
 file_content = StringIO(f.read())
 f.close()
 #revisar
-#revisar#revisar#revisar#revisar
-#revisar
-#revisar
+
 
 # recogemos la variable file_name
 file = path + file_name
@@ -43,7 +44,6 @@ print(get_outputfile_ordered_header(schema))
 header_columns = get_inputfile_header(schema)
 column_types = get_inputfile_column_types(schema)
 
-
 # Create converters for correct column parsing
 #float_to_int_conv = lambda x: int(x[0:x.find('.')]) if x else None
 
@@ -63,16 +63,20 @@ try:
     # Create converters for correct column parsing
     #float_to_int_conv = lambda x: int(x[0:x.find('.')]) if x else None
 
+    # Fecha
     # Create converters for correct column parsing
     df = pd.read_csv(file_content,
                      sep=csv_separator,
                      header=None,
                      names=header_columns,
                      dtype=column_types,
-                     encoding=file_encoding
-    #                 converters={
-    #                     'Cantidad Planificada': float_to_int_conv
-    #                 }
+                     encoding=file_encoding,
+                     converters={
+                         'Fecha Necesidad': lambda x: datetime.strptime(x, '%Y-%m-%d')
+                     },
+                    thousands = csv_thousands,
+                    decimal = csv_decimal,
+                    float_precision = 'high'
                      )
 except Exception as e:
     logger.error(e)
@@ -106,7 +110,7 @@ df = df.reindex(columns=ordered_output_header)
 #ordered_output_header = get_outputfile_ordered_header(file_schema)
 #df = df.reindex(columns=ordered_output_header)
 
-#print (df)
+#conversion de quan a float
 # Convert cantidad a int
 df = df.astype({'cantidad': int})
 
@@ -135,12 +139,13 @@ result = json.loads(result)
 
 # Fill file STOCK-UBICACIONES
 for i in result.items():
+    i[1]['fechaNec'] = datetime.fromtimestamp(i[1]['fechaNec']//1000).strftime('%Y-%m-%d')
     json_result['NECESIDADES'].append(i[1])
 
 # Dumps the result in JSON format local
 json_result = json.dumps(json_result)
 data = BytesIO(json_result.encode('utf-8'))
 
-f=open('json_test.json','w')
+f=open('C:/PROYECTO_SEAT_AWS/JIRA_SCT_52/demo_py_52/target/json_test.json','w')
 f.write(json_result)
 f.close()

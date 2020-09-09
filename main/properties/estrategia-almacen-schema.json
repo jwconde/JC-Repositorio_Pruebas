@@ -1,0 +1,21 @@
+{
+  "Fecha":{
+    "type":"string|date(YYYY-MM-DD HH:MM:SS)"},
+  "estrategia":{
+    "type":"array",
+    "items":
+    {"indAreaAlmacenamiento":
+    {"type":"string"},
+      "ubicacion":
+      {"type":"string"},
+      "indTipoAlmacenEntradaStock":
+      {"type":"string"},
+      "numAlmacen_ComplejoAlm":
+      {"type":"string"},
+      "material":{"type":"string"},
+      "almacenAprovExt":{"type":"string"},
+      "centro":{"type":"string"},
+      "tipoAlmacen":{"type":"string"},"id":{
+      "type":"integer"},"denomIndicadorAreaAlmacenamiento":{
+      "type":"string"},"denomIndicadorTipoAlm":{
+      "type":"string"},"petBorradoDatosAlmacen":{"type":"string"}}}}
